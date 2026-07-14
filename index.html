@@ -5,52 +5,213 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Il Tuo Viaggio Perfetto | Zero Stress</title>
     <style>
-        body { font-family: 'Arial', sans-serif; margin: 0; padding: 0; color: #333; line-height: 1.6; }
-        header { background: #fff; text-align: center; padding: 60px 20px; border-bottom: 1px solid #eee; }
-        h1 { font-size: 2.5em; color: #111; margin-bottom: 10px; }
-        .subtitle { font-size: 1.2em; color: #666; margin-bottom: 30px; }
-        .cta-btn { background: #007bff; color: #fff; padding: 15px 30px; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block; }
-        .section { padding: 60px 20px; max-width: 800px; margin: 0 auto; }
-        .features { display: flex; flex-direction: column; gap: 20px; }
-        .feature-card { background: #f9f9f9; padding: 20px; border-radius: 8px; border-left: 5px solid #007bff; }
-        .price-box { text-align: center; background: #f1f8ff; padding: 40px; border-radius: 8px; margin-top: 40px; }
-        .price { font-size: 3em; font-weight: bold; color: #007bff; }
-        footer { text-align: center; padding: 40px 20px; background: #333; color: #fff; font-size: 0.9em; }
+        /* Tavolozza Colori Psicologica: Calda, Accogliente, Vacanziera */
+        body { 
+            font-family: 'Helvetica Neue', Arial, sans-serif; 
+            margin: 0; 
+            padding: 0; 
+            color: #2f3e46; 
+            background-color: #faf7f2; /* Sfondo caldo color sabbia/lino */
+            line-height: 1.7; 
+        }
+        
+        /* Header con immagine di sfondo (Costiera Amalfitana/Tramonto) e overlay scuro per leggibilità */
+        header { 
+            background: linear-gradient(rgba(29, 78, 86, 0.65), rgba(17, 51, 56, 0.85)), 
+                        url('https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=1600&q=80') no-repeat center center;
+            background-size: cover;
+            color: #faf7f2;
+            text-align: center; 
+            padding: 120px 20px; 
+            border-radius: 0 0 40px 40px; /* Curve morbide e confortevoli */
+            box-shadow: 0 10px 30px rgba(29, 78, 86, 0.15);
+        }
+        
+        h1 { 
+            font-size: 2.8em; 
+            color: #ffffff; 
+            margin-bottom: 15px; 
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            line-height: 1.3;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .subtitle { 
+            font-size: 1.3em; 
+            color: #e8f1ee; 
+            max-width: 650px;
+            margin: 0 auto 35px auto;
+            font-weight: 300;
+            text-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Pulsante color Tramonto/Terracota: Attira l'attenzione con calore */
+        .cta-btn { 
+            background: #de6b48; 
+            color: #ffffff; 
+            padding: 16px 36px; 
+            text-decoration: none; 
+            border-radius: 50px; /* Forma a pillola, super amichevole */
+            font-weight: bold; 
+            display: inline-block; 
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(222, 107, 72, 0.3);
+            font-size: 1.1em;
+        }
+        
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(222, 107, 72, 0.45);
+            background: #e27958;
+        }
+        
+        .section { 
+            padding: 80px 20px; 
+            max-width: 1000px; /* Allargato per ospitare il layout a due colonne */
+            margin: 0 auto; 
+        }
+        
+        h2 {
+            font-size: 2em;
+            color: #1d4e56;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        /* Layout flessibile: foto a sinistra, testo a destra */
+        .content-grid {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            flex-wrap: wrap; /* Rende il sito responsive sui telefoni */
+        }
+
+        .grid-image {
+            flex: 1 1 350px;
+        }
+
+        .grid-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 24px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+            object-fit: cover;
+        }
+        
+        .features { 
+            flex: 1 1 400px;
+            display: flex; 
+            flex-direction: column; 
+            gap: 25px; 
+        }
+        
+        /* Schede morbide, pulite ma calde */
+        .feature-card { 
+            background: #ffffff; 
+            padding: 25px; 
+            border-radius: 20px; 
+            border-left: 6px solid #1d4e56; 
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.02);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateX(5px);
+        }
+
+        .feature-card strong {
+            color: #1d4e56;
+            font-size: 1.15em;
+            display: block;
+            margin-bottom: 8px;
+        }
+        
+        /* Box Prezzo che trasmette relax e valore del servizio */
+        .price-box { 
+            text-align: center; 
+            background: #edf4f4; 
+            padding: 50px 40px; 
+            border-radius: 30px; 
+            margin-top: 60px; 
+            border: 1px solid #cbdad5;
+            box-shadow: 0 15px 35px rgba(29, 78, 86, 0.05);
+        }
+        
+        .price-box h3 {
+            margin-top: 0;
+            color: #1d4e56;
+            font-size: 1.5em;
+        }
+        
+        .price { 
+            font-size: 3.5em; 
+            font-weight: bold; 
+            color: #de6b48; 
+            margin: 15px 0;
+        }
+
+        .price-box p {
+            color: #526b73;
+            max-width: 500px;
+            margin: 0 auto 30px auto;
+        }
+        
+        footer { 
+            text-align: center; 
+            padding: 40px 20px; 
+            background: #113338; 
+            color: #cbdad5; 
+            font-size: 0.9em; 
+            border-radius: 40px 40px 0 0;
+            margin-top: 40px;
+        }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>Smetti di buttare i tuoi weekend su 40 schede di Booking.</h1>
-        <p class="subtitle">Pianifico il tuo viaggio ideale (mezzi, hotel e itinerario) su misura per te. In totale libertà, a tariffa fissa.</p>
+        <h1>Immagina solo la parte più bella del viaggio.<br>Al resto ci penso io.</h1>
+        <p class="subtitle">Basta ansia da prenotazione, ore perse a confrontare voli e il dubbio di prendere una fregatura. Disegno il tuo itinerario perfetto, su misura per te.</p>
         <a href="#contatti" class="cta-btn">Inizia Ora a 50€</a>
     </header>
 
     <div class="section">
-        <h2>Come funziona?</h2>
-        <div class="features">
-            <div class="feature-card">
-                <strong>1. Mi racconti la tua idea:</strong> Date, budget, preferenze e lo stile di viaggio che ami.
+        <h2>Come funziona il servizio?</h2>
+        
+        <div class="content-grid">
+            <!-- Colonna Immagine Evocativa -->
+            <div class="grid-image">
+                <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=800&q=80" alt="Pianificazione Viaggio">
             </div>
-            <div class="feature-card">
-                <strong>2. Faccio io il lavoro duro:</strong> Spulcio manualmente tariffe, coincidenze, quartieri e recensioni reali per trovare le combinazioni perfette.
-            </div>
-            <div class="feature-card">
-                <strong>3. Prenoti in 2 clic:</strong> Ricevi un PDF interattivo con l'itinerario ottimizzato e i link diretti per bloccare voli e hotel in autonomia, senza costi nascosti.
+
+            <!-- Colonna Passaggi -->
+            <div class="features">
+                <div class="feature-card">
+                    <strong>1. Ci prendiamo un caffè virtuale</strong>
+                    Mi racconti la tua idea: le date, il budget che hai a disposizione, le tue preferenze (mare, cultura, relax) e lo stile di viaggio che ti fa battere il cuore.
+                </div>
+                <div class="feature-card">
+                    <strong>2. Faccio io il lavoro duro</strong>
+                    Spulcio manualmente tariffe, combinazioni di mezzi, quartieri sicuri e recensioni reali per scovare le perle nascoste al miglior prezzo possibile sul mercato.
+                </div>
+                <div class="feature-card">
+                    <strong>3. Tu devi solo preparare la valigia</strong>
+                    Ricevi una guida PDF interattiva con la tua mappa, i consigli sui posti migliori dove mangiare e i link diretti per bloccare voli e hotel in un clic, in totale autonomia e sicurezza.
+                </div>
             </div>
         </div>
 
         <div class="price-box" id="contatti">
-            <h3>Nessuna commissione d'agenzia. Solo competenza.</h3>
+            <h3>Zero stress. Nessuna commissione d'agenzia.</h3>
             <div class="price">50€</div>
-            <p>A prescindere che tu scelga solo i mezzi, solo l'hotel o il pacchetto completo.</p>
-            <br>
-            <a href="mailto:tuanome@esempio.com" class="cta-btn">Scrivimi per Partire</a>
+            <p>La tariffa è fissa e trasparente, sia che tu scelga di farmi ottimizzare solo i mezzi, solo l'alloggio o il pacchetto completo.</p>
+            <a href="mailto:tuanome@esempio.com" class="cta-btn">Scrivimi e Raccontami la tua Meta</a>
         </div>
     </div>
 
     <footer>
-        <p>© 2026 Travel Designer Indipendente. Servizio di consulenza e pianificazione itinerari.</p>
+        <p>&copy; 2026 Travel Designer Indipendente. Servizio di consulenza per viaggiatori liberi.</p>
     </footer>
 
 </body>
