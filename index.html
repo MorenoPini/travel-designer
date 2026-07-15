@@ -759,6 +759,14 @@
             <p>Raccontami la tua idea compilando i campi qui sotto. Ti risponderò via email entro 24 ore con una proposta preliminare per iniziare a parlarne!</p>
             
             <form id="travel-form">
+                <!-- ⚠️ INCOLLA LA TUA CHIAVE DI WEB3FORMS AL POSTO DI: INSERISCI_QUI_IL_TUO_ACCESS_KEY -->
+                <input type="hidden" name="access_key" value="65965947-51c4-4613-b70f-ef9d4f3378f2">
+                
+                <!-- Nome del mittente personalizzato nella mail che ricevi -->
+                <input type="hidden" name="from_name" value="Sito Travel Designer">
+                <!-- Argomento email -->
+                <input type="hidden" name="subject" value="Nuova richiesta viaggio dal sito!">
+
                 <div class="form-group">
                     <label for="nome">Come ti chiami?</label>
                     <input type="text" id="nome" name="Nome" placeholder="Inserisci il tuo nome" required>
@@ -789,7 +797,6 @@
                     <textarea id="messaggio" name="Dettagli Viaggio" rows="5" placeholder="Es. Siamo una coppia, vorremmo viaggiare a metà settembre per 5 giorni. Budget totale circa 500€ a persona. Amiamo il buon cibo e vorremmo evitare spostamenti stressanti..." required></textarea>
                 </div>
 
-                <!-- PULSANTE AGGIORNATO PER CARICAMENTO -->
                 <button type="submit" id="submit-btn" class="cta-btn form-submit-btn">
                     <span class="btn-text">Invia la mia richiesta</span>
                     <div class="spinner"></div>
@@ -890,53 +897,53 @@
             }
         }
 
-        // 3. INVIO FORM CON AJAX (SENZA REINDIRIZZAMENTO)
+        // 3. INVIO FORM SILENZIOSO CON WEB3FORMS (AJAX)
         document.getElementById('travel-form').addEventListener('submit', function(e) {
-            e.preventDefault(); // Blocca il caricamento della pagina standard
+            e.preventDefault(); // Impedisce il ricaricamento della pagina
             
             const form = this;
             const btn = document.getElementById('submit-btn');
             const toast = document.getElementById('success-toast');
             
-            // Attiva stato di caricamento (mostra rotellina e blocca input)
+            // Attiva stato di caricamento sul bottone (mostra la rotellina)
             btn.classList.add('loading');
             btn.disabled = true;
 
-            // Prepariamo i dati del modulo in formato JSON
             const formData = new FormData(form);
-            const dataObject = Object.fromEntries(formData);
+            const object = Object.fromEntries(formData);
+            const json = JSON.stringify(object);
 
-            // Inviamo la richiesta asincrona a FormSubmit (endpoint AJAX)
-            fetch("https://formsubmit.co/ajax/morenpinitraveldesigner@gmail.com", {
-                method: "POST",
+            // Spedizione silente via API
+            fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
                 headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json"
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
                 },
-                body: JSON.stringify(dataObject)
+                body: json
             })
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                }
-                throw new Error('Errore di rete durante la spedizione.');
-            })
-            .then(data => {
-                // Successo! Mostra la notifica verde
-                toast.classList.add('show');
-                form.reset(); // Pulisce il form
+            .then(async (response) => {
+                let resJson = await response.json();
+                if (response.status === 200) {
+                    // Successo! Mostra la notifica verde
+                    toast.classList.add('show');
+                    form.reset(); // Svuota i campi del form
 
-                // Nascondi la notifica verde dopo 5 secondi
-                setTimeout(() => {
-                    toast.classList.remove('show');
-                }, 5000);
+                    // Nasconde la notifica dopo 5 secondi
+                    setTimeout(() => {
+                        toast.classList.remove('show');
+                    }, 5000);
+                } else {
+                    console.log(response);
+                    alert("Errore nell'invio: " + resJson.message);
+                }
             })
             .catch(error => {
-                console.error('Errore:', error);
-                alert('Ops! Qualcosa è andato storto nell\'invio. Puoi scrivermi direttamente a morenpinitraveldesigner@gmail.com!');
+                console.log(error);
+                alert("Si è verificato un errore di connessione. Riprova più tardi!");
             })
             .finally(() => {
-                // Ripristina il pulsante alla normalità
+                // Riapre il bottone alla fine dell'operazione
                 btn.classList.remove('loading');
                 btn.disabled = false;
             });
