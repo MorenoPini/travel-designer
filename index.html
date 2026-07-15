@@ -5,72 +5,99 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Il Tuo Viaggio Perfetto | Zero Stress con un Travel Designer</title>
     <style>
-        /* --- CONFIGURAZIONE BASE & SMOOTH SCROLLING --- */
-        html {
-            scroll-behavior: smooth;
-        }
-        
+        /* --- CONFIGURAZIONE BASE --- */
         body { 
             font-family: 'Helvetica Neue', Arial, sans-serif; 
             margin: 0; 
             padding: 0; 
             color: #2f3e46; 
-            background-color: #faf7f2; /* Sabbia caldo e rilassante */
+            background-color: #faf7f2; /* Sabbia caldo e confortevole */
             line-height: 1.7; 
             position: relative;
             overflow-x: hidden; 
         }
 
-        /* --- EFFETTO FLUTTUANTE AI LATI (Solo per schermi grandi) --- */
-        .decor-side {
-            position: absolute;
-            width: 80px;
-            height: 80px;
-            opacity: 0.15;
-            pointer-events: none;
-            display: none; /* Nascosto su telefono */
-            z-index: 1;
+        /* --- DECORAZIONI LATERALI (STAMPS FLUTTUANTI) --- */
+        .side-badge {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 120px;
+            background: #ffffff;
+            padding: 20px 15px;
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(29, 78, 86, 0.08);
+            border: 1px solid #cbdad5;
+            text-align: center;
+            z-index: 10;
+            display: none; /* Nascosti su mobile */
+            transition: all 0.3s ease;
+        }
+
+        .side-badge:hover {
+            transform: translateY(-55%) scale(1.05);
+            box-shadow: 0 20px 40px rgba(222, 107, 72, 0.15);
+            border-color: #de6b48;
+        }
+
+        .side-badge-left {
+            left: 30px;
+            animation: floatLeft 6s ease-in-out infinite;
+        }
+
+        .side-badge-right {
+            right: 30px;
+            animation: floatRight 7s ease-in-out infinite;
+        }
+
+        .side-badge svg {
+            width: 40px;
+            height: 40px;
+            margin-bottom: 10px;
+        }
+
+        .side-badge h4 {
+            margin: 0;
+            font-size: 0.85em;
+            color: #1d4e56;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .side-badge p {
+            margin: 5px 0 0 0;
+            font-size: 0.8em;
+            color: #de6b48;
+            font-weight: bold;
         }
 
         @media (min-width: 1200px) {
-            .decor-side {
-                display: block;
-            }
-            .decor-left {
-                left: 5%;
-                top: 35%;
-                animation: floatLeft 6s ease-in-out infinite;
-            }
-            .decor-right {
-                right: 5%;
-                top: 65%;
-                animation: floatRight 8s ease-in-out infinite;
-            }
+            .side-badge { display: block; }
         }
 
         @keyframes floatLeft {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-15px) rotate(5deg); }
+            0%, 100% { transform: translateY(-50%) rotate(0deg); }
+            50% { transform: translateY(-58%) rotate(3deg); }
         }
 
         @keyframes floatRight {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(-8deg); }
+            0%, 100% { transform: translateY(-50%) rotate(0deg); }
+            50% { transform: translateY(-42%) rotate(-3deg); }
         }
 
-        /* Sfondi sfumati giganti di atmosfera */
+        /* Sfondi sfumati giganti */
         .bg-blob {
             position: absolute;
-            width: 600px;
-            height: 600px;
+            width: 700px;
+            height: 700px;
             border-radius: 50%;
-            filter: blur(150px);
+            filter: blur(160px);
             z-index: -1;
-            opacity: 0.12;
+            opacity: 0.15;
             pointer-events: none;
         }
-        .blob-left { background-color: #1d4e56; top: 20%; left: -250px; }
-        .blob-right { background-color: #de6b48; top: 70%; right: -250px; }
+        .blob-left { background-color: #1d4e56; top: 15%; left: -250px; }
+        .blob-right { background-color: #de6b48; top: 65%; right: -250px; }
 
         /* --- HEADER --- */
         header { 
@@ -282,7 +309,7 @@
             font-weight: normal;
         }
 
-        /* --- SEZIONE FAQ COLLAPSIBLE (A soffietto interattivo) --- */
+        /* --- SEZIONE FAQ COLLAPSIBLE --- */
         .faq-section {
             margin-top: 80px;
             background: #ffffff;
@@ -322,9 +349,7 @@
             align-items: center;
         }
 
-        summary::-webkit-details-marker {
-            display: none;
-        }
+        summary::-webkit-details-marker { display: none; }
 
         summary::after {
             content: '+';
@@ -411,6 +436,81 @@
             cursor: pointer;
             margin-top: 10px;
         }
+
+        /* --- FINESTRA POPUP (MODAL ABOUT) --- */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(17, 51, 56, 0.65);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background-color: #faf7f2;
+            padding: 40px;
+            border-radius: 35px;
+            max-width: 550px;
+            width: 90%;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.15);
+            border: 1px solid #cbdad5;
+            position: relative;
+            transform: scale(0.85);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-align: left;
+        }
+
+        .modal-overlay.show .modal-content {
+            transform: scale(1);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 2.2em;
+            color: #1d4e56;
+            cursor: pointer;
+            transition: color 0.2s;
+            line-height: 1;
+        }
+
+        .close-btn:hover {
+            color: #de6b48;
+        }
+
+        .modal-content h3 {
+            color: #1d4e56;
+            font-size: 1.8em;
+            margin-top: 0;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #cbdad5;
+            padding-bottom: 10px;
+        }
+
+        .modal-content p {
+            color: #2f3e46;
+            font-size: 1.05em;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .modal-content strong {
+            color: #de6b48;
+        }
         
         /* --- FOOTER & SOCIAL --- */
         footer { 
@@ -458,23 +558,33 @@
 </head>
 <body>
 
-    <!-- Icone Vettoriali Fluttuanti ai Lati (Solo Desktop) -->
-    <svg class="decor-side decor-left" viewBox="0 0 24 24" fill="none" stroke="#1d4e56" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/>
-        <circle cx="12" cy="13" r="4"/>
-    </svg>
-    <svg class="decor-side decor-right" viewBox="0 0 24 24" fill="none" stroke="#de6b48" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="12" cy="12" r="10"/>
-        <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
-    </svg>
+    <!-- STAMPS DECORATIVI LATERALI (Sempre visibili su Desktop) -->
+    <div class="side-badge side-badge-left">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#de6b48" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+            <polyline points="22 4 12 14.01 9 11.01"/>
+        </svg>
+        <h4>Su Misura</h4>
+        <p>100% Personalizzato</p>
+    </div>
+
+    <div class="side-badge side-badge-right">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#1d4e56" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="16"/>
+            <line x1="8" y1="12" x2="12" y2="12"/>
+        </svg>
+        <h4>Prezzo Onesto</h4>
+        <p>Solo 40€ Fissi</p>
+    </div>
 
     <!-- Sfondi Sfumati -->
     <div class="bg-blob blob-left"></div>
     <div class="bg-blob blob-right"></div>
 
     <header>
-        <!-- LOGO INTERATTIVO CON SMOOTH SCROLL AUTOMATICO -->
-        <div class="logo-container" onclick="document.getElementById('contatti').scrollIntoView({ behavior: 'smooth' });">
+        <!-- LOGO INTERATTIVO (Apre la finestra chi sono) -->
+        <div class="logo-container" onclick="openAboutModal();">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
                 <circle cx="50" cy="50" r="46" fill="#faf7f2" opacity="0.2" />
                 <circle cx="45" cy="53" r="24" fill="#de6b48" />
@@ -489,8 +599,7 @@
 
         <h1>Immagina solo la parte più bella del viaggio.<br>Al resto ci penso io.</h1>
         <p class="subtitle">Dimentica lo stress da prenotazione e le ore perse a confrontare voli. Disegno l'itinerario perfetto per te, su misura e a tariffa fissa.</p>
-        <!-- AGGIORNATO CON L'ATTIVAZIONE DELLO SCROLL SOFT -->
-        <button onclick="document.getElementById('contatti').scrollIntoView({ behavior: 'smooth' });" class="cta-btn">Inizia Ora a 50€</button>
+        <button onclick="smoothScrollTo('contatti');" class="cta-btn">Inizia Ora a 40€</button>
     </header>
 
     <div class="section">
@@ -521,13 +630,13 @@
             </div>
         </div>
 
-        <!-- SEZIONE FIDUCIA & TRASPARENZA (Fattore psicologico chiave) -->
+        <!-- SEZIONE FIDUCIA & TRASPARENZA -->
         <div class="trust-banner">
             <h3>🤝 La mia Garanzia: 100% Trasparenza</h3>
-            <p>A differenza delle agenzie di viaggio tradizionali, **io non ricevo alcuna commissione** dalle strutture o dalle compagnie aeree che ti consiglio. Il mio unico guadagno è la tua quota di 50€. Questo ti garantisce che le mie ricerche saranno sempre totalmente imparziali e finalizzate a farti ottenere il massimo risparmio e la migliore qualità sul mercato!</p>
+            <p>A differenza delle agenzie di viaggio tradizionali, **io non ricevo alcuna commissione** dalle strutture o dalle compagnie aeree che ti consiglio. Il mio unico guadagno è la tua quota di 40€. Questo ti garantisce che le mie ricerche saranno sempre totalmente imparziali e finalizzate a farti ottenere il massimo risparmio e la migliore qualità sul mercato!</p>
         </div>
 
-        <!-- SEZIONE SOCIAL PROOF (Recensioni clienti) -->
+        <!-- SEZIONE SOCIAL PROOF -->
         <h2 style="margin-top: 80px;">Cosa dicono i viaggiatori</h2>
         <div class="reviews-grid">
             <div class="review-card">
@@ -543,7 +652,7 @@
                 </div>
             </div>
             <div class="review-card">
-                <p class="review-text">"Non ho tempo di stare ore su internet per incastrare hotel e treni per i miei viaggi di lavoro e relax. Con 50€ ho avuto un PDF stupendo con tutto pronto. Devo solo cliccare e partire."</p>
+                <p class="review-text">"Non ho tempo di stare ore su internet per incastrare hotel e treni per i miei viaggi di lavoro e relax. Con 40€ ho avuto un PDF stupendo con tutto pronto. Devo solo cliccare e partire."</p>
                 <div class="review-author">
                     Alessandro <span class="review-meta">• Viaggiatore Seriale</span>
                 </div>
@@ -556,7 +665,7 @@
             <div class="faq-container">
                 <details>
                     <summary>Perché dovrei pagare te e non un'agenzia?</summary>
-                    <p>Le agenzie tradizionali spesso caricano commissioni nascoste sui prezzi di hotel e voli per guadagnare di più. Con me paghi solo 50€ fissi per il mio tempo e la mia ricerca: sei tu a prenotare direttamente, ottenendo i prezzi reali più bassi del web e risparmiando centinaia di euro.</p>
+                    <p>Le agenzie tradizionali spesso caricano commissioni nascoste sui prezzi di hotel e voli per guadagnare di più. Con me paghi solo 40€ fissi per il mio tempo e la mia ricerca: sei tu a prenotare direttamente, ottenendo i prezzi reali più bassi del web e risparmiando centinaia di euro.</p>
                 </details>
                 <details>
                     <summary>Prenoti tu i voli e gli hotel per me?</summary>
@@ -567,20 +676,19 @@
                     <p>La tua soddisfazione è fondamentale. Una volta ricevuta la prima bozza dell'itinerario personalizzato, faremo insieme tutte le modifiche necessarie finché il programma di viaggio non sarà esattamente come lo desideri.</p>
                 </details>
                 <details>
-                    <summary>La tariffa di 50€ è davvero fissa?</summary>
-                    <p>Sì! Sia che tu mi chieda di organizzare solo la tratta dei voli, solo la selezione degli alloggi o l'itinerario completo di viaggio, la mia tariffa per la consulenza rimane sempre di 50€, senza sorprese.</p>
+                    <summary>La tariffa di 40€ è davvero fissa?</summary>
+                    <p>Sì! Sia che tu mi chieda di organizzare solo la tratta dei voli, solo la selezione degli alloggi o l'itinerario completo di viaggio, la mia tariffa per la consulenza rimane sempre di 40€, senza sorprese.</p>
                 </details>
             </div>
         </div>
 
-        <!-- FORM CONTATTI AVANZATO (Connesso alla tua email) -->
+        <!-- FORM CONTATTI AVANZATO -->
         <div class="form-container" id="contatti">
             <h3>Disegniamo il tuo prossimo viaggio</h3>
             <p>Raccontami la tua idea compilando i campi qui sotto. Ti risponderò via email entro 24 ore con una proposta preliminare per iniziare a parlarne!</p>
             
             <form action="https://formsubmit.co/morenpinitraveldesigner@gmail.com" method="POST">
                 
-                <!-- Campi di controllo FormSubmit (Sicurezza e Oggetto mail) -->
                 <input type="hidden" name="_captcha" value="false">
                 <input type="hidden" name="_subject" value="Nuova richiesta viaggio dal sito!">
                 
@@ -603,9 +711,9 @@
                     <label for="servizio">Cosa desideri che pianifichi?</label>
                     <select id="servizio" name="Tipo Servizio" required>
                         <option value="" disabled selected>Seleziona un'opzione</option>
-                        <option value="Completo">Pacchetto Completo (Mezzi + Alloggio + Itinerario) - 50€</option>
-                        <option value="Solo Alloggio">Solo Alloggio (Hotel o Airbnb verificati) - 50€</option>
-                        <option value="Solo Mezzi">Solo Mezzi (Voli, treni e coincidenze ideali) - 50€</option>
+                        <option value="Completo">Pacchetto Completo (Mezzi + Alloggio + Itinerario) - 40€</option>
+                        <option value="Solo Alloggio">Solo Alloggio (Hotel o Airbnb verificati) - 40€</option>
+                        <option value="Solo Mezzi">Solo Mezzi (Voli, treni e coincidenze ideali) - 40€</option>
                     </select>
                 </div>
 
@@ -619,8 +727,18 @@
         </div>
     </div>
 
+    <!-- LA FINESTRA POPUP (Chi Sono) -->
+    <div id="aboutModal" class="modal-overlay" onclick="closeAboutModal(event);">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeAboutModal(null);">&times;</span>
+            <h3>Dietro alla mappa: Chi sono</h3>
+            <p>Ciao! Sono <strong>Moreno</strong>, ho 27 anni e ho una confessione da fare: per me, la parte più entusiasmante di un viaggio inizia mesi prima di salire sull'aereo.</p>
+            <p>Mentre la maggior parte delle persone prova un senso d'ansia pazzesco all'idea di incastrare coincidenze, leggere decine di recensioni di hotel o calcolare i budget, io provo pura adrenalina. È un'<strong>abilità innata</strong> che ho scoperto di avere fin da ragazzino, quando programmavo nei minimi dettagli le avventure per i miei amici, ottimizzando ogni singolo centesimo senza mai rinunciare alla meraviglia della scoperta.</p>
+            <p>Ciò che per molti è uno stress, per me è <strong>puro piacere</strong>. Ho creato questo spazio per mettere questo mio talento naturale al tuo servizio. Io trovo le gemme nascoste e le combinazioni perfette al minor prezzo; tu devi solo fare la valigia e goderti la parte più bella: partire.</p>
+        </div>
+    </div>
+
     <footer>
-        <!-- Sezione Social -->
         <div class="social-links">
             <a href="https://instagram.com/IL_TUO_PROFILO" class="social-icon" target="_blank" aria-label="Instagram">
                 <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
@@ -631,6 +749,62 @@
         </div>
         <p>&copy; 2026 Travel Designer Indipendente. Servizio di consulenza per viaggiatori liberi.</p>
     </footer>
+
+    <!-- --- JAVASCRIPT AVANZATO PER AZIONI FLUIDE --- -->
+    <script>
+        // 1. FUNZIONE DI SMOOTH SCROLLING "A EFFETTO SETA"
+        function smoothScrollTo(elementId) {
+            const target = document.getElementById(elementId);
+            if (!target) return;
+            
+            const targetPosition = target.getBoundingClientRect().top + window.pageYOffset;
+            const startPosition = window.pageYOffset;
+            const distance = targetPosition - startPosition;
+            const duration = 1200; // Durata in millisecondi (rallentata ed elegante)
+            let start = null;
+
+            window.requestAnimationFrame(step);
+
+            function step(timestamp) {
+                if (!start) start = timestamp;
+                const progress = timestamp - start;
+                
+                // Funzione di attenuazione matematica Ease-In-Out (accelerazione e decelerazione dolce)
+                const progressPercentage = Math.min(progress / duration, 1);
+                const easeInOutQuad = progressPercentage < 0.5 
+                    ? 2 * progressPercentage * progressPercentage 
+                    : -1 + (4 - 2 * progressPercentage) * progressPercentage;
+                
+                window.scrollTo(0, startPosition + distance * easeInOutQuad);
+                
+                if (progress < duration) {
+                    window.requestAnimationFrame(step);
+                } else {
+                    window.scrollTo(0, targetPosition); // Si assicura di arrivare a destinazione esatta
+                }
+            }
+        }
+
+        // 2. FUNZIONI DI GESTIONE DEL MODAL (ABOUT)
+        function openAboutModal() {
+            const modal = document.getElementById('aboutModal');
+            modal.style.display = 'flex';
+            setTimeout(() => {
+                modal.classList.add('show');
+            }, 10);
+        }
+
+        function closeAboutModal(event) {
+            // Se clicchi fuori dal box o sul tasto chiudi, si chiude con effetto morbido
+            const modal = document.getElementById('aboutModal');
+            if (event === null || event.target === modal) {
+                modal.classList.remove('show');
+                setTimeout(() => {
+                    modal.style.display = 'none';
+                }, 300);
+            }
+        }
+    </script>
 
 </body>
 </html>
