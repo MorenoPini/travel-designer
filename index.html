@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Il Tuo Viaggio Perfetto | Zero Stress con un Travel Designer</title>
     <style>
-        /* --- TAVOLOZZA COLORI PSICOLOGICA (Vibe Tramonto e Oceano) --- */
+        /* --- CONFIGURAZIONE BASE & SMOOTH SCROLLING --- */
         html {
-            scroll-behavior: smooth; /* Scorrimento fluido tra le sezioni */
+            scroll-behavior: smooth;
         }
         
         body { 
@@ -15,48 +15,75 @@
             margin: 0; 
             padding: 0; 
             color: #2f3e46; 
-            background-color: #faf7f2; /* Sabbia caldo */
+            background-color: #faf7f2; /* Sabbia caldo e rilassante */
             line-height: 1.7; 
             position: relative;
             overflow-x: hidden; 
         }
-        
-        /* DECORATORI SFUMATI AI LATI (Riempiono elegantemente lo schermo su PC) */
+
+        /* --- EFFETTO FLUTTUANTE AI LATI (Solo per schermi grandi) --- */
+        .decor-side {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            opacity: 0.15;
+            pointer-events: none;
+            display: none; /* Nascosto su telefono */
+            z-index: 1;
+        }
+
+        @media (min-width: 1200px) {
+            .decor-side {
+                display: block;
+            }
+            .decor-left {
+                left: 5%;
+                top: 35%;
+                animation: floatLeft 6s ease-in-out infinite;
+            }
+            .decor-right {
+                right: 5%;
+                top: 65%;
+                animation: floatRight 8s ease-in-out infinite;
+            }
+        }
+
+        @keyframes floatLeft {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(5deg); }
+        }
+
+        @keyframes floatRight {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(-8deg); }
+        }
+
+        /* Sfondi sfumati giganti di atmosfera */
         .bg-blob {
             position: absolute;
             width: 600px;
             height: 600px;
             border-radius: 50%;
-            filter: blur(140px);
+            filter: blur(150px);
             z-index: -1;
-            opacity: 0.15;
+            opacity: 0.12;
             pointer-events: none;
         }
-        .blob-left {
-            background-color: #1d4e56; /* Blu Oceano */
-            top: 20%;
-            left: -250px;
-        }
-        .blob-right {
-            background-color: #de6b48; /* Terracotta */
-            top: 60%;
-            right: -250px;
-        }
+        .blob-left { background-color: #1d4e56; top: 20%; left: -250px; }
+        .blob-right { background-color: #de6b48; top: 70%; right: -250px; }
 
-        /* HEADER (Impatto visivo "Wow" con effetto parallasse soft) */
+        /* --- HEADER --- */
         header { 
             background: linear-gradient(rgba(29, 78, 86, 0.7), rgba(17, 51, 56, 0.9)), 
                         url('https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=1600&q=80') no-repeat center center;
             background-size: cover;
-            background-attachment: scroll;
             color: #faf7f2;
             text-align: center; 
-            padding: 120px 20px; 
+            padding: 130px 20px; 
             border-radius: 0 0 50px 50px; 
             box-shadow: 0 15px 35px rgba(29, 78, 86, 0.2);
         }
 
-        /* LOGO INTERATTIVO */
         .logo-container {
             margin-bottom: 25px;
             display: inline-block;
@@ -69,7 +96,7 @@
         }
         
         h1 { 
-            font-size: 3em; 
+            font-size: 3.2em; 
             color: #ffffff; 
             margin-bottom: 15px; 
             font-weight: 700;
@@ -87,11 +114,11 @@
             text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
         }
         
-        /* BOTTONI CALDI E ACCOGLIENTI */
+        /* --- BOTTONI --- */
         .cta-btn { 
             background: #de6b48; 
             color: #ffffff; 
-            padding: 18px 40px; 
+            padding: 18px 42px; 
             text-decoration: none; 
             border-radius: 50px; 
             font-weight: bold; 
@@ -120,7 +147,6 @@
             color: #1d4e56;
             text-align: center;
             margin-bottom: 50px;
-            position: relative;
         }
 
         h2::after {
@@ -133,7 +159,7 @@
             border-radius: 2px;
         }
 
-        /* GRID CONTENT: Flessibile e Responsive */
+        /* --- CONTENT GRID --- */
         .content-grid {
             display: flex;
             gap: 50px;
@@ -151,11 +177,6 @@
             border-radius: 30px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.08);
             object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .grid-image img:hover {
-            transform: scale(1.02);
         }
         
         .features { 
@@ -165,7 +186,6 @@
             gap: 25px; 
         }
         
-        /* SCHEDE INFORMATIVE */
         .feature-card { 
             background: #ffffff; 
             padding: 30px; 
@@ -186,37 +206,148 @@
             display: block;
             margin-bottom: 10px;
         }
-        
-        /* SEZIONE F.A.Q. (Aumenta la fiducia del cliente del 200%) */
+
+        /* --- SEZIONE FIDUCIA & TRASPARENZA --- */
+        .trust-banner {
+            background: linear-gradient(135deg, #1d4e56 0%, #113338 100%);
+            color: #faf7f2;
+            padding: 50px 40px;
+            border-radius: 35px;
+            margin: 80px 0;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(29, 78, 86, 0.15);
+        }
+
+        .trust-banner h3 {
+            color: #ffffff;
+            font-size: 1.8em;
+            margin-top: 0;
+        }
+
+        .trust-banner p {
+            max-width: 700px;
+            margin: 15px auto 0 auto;
+            color: #cbdad5;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        /* --- SEZIONE RECENSIONI (SOCIAL PROOF) --- */
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .review-card {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+            border: 1px solid #e8f1ee;
+            position: relative;
+        }
+
+        .review-card::before {
+            content: "“";
+            position: absolute;
+            top: 15px;
+            left: 25px;
+            font-size: 5em;
+            color: #de6b48;
+            opacity: 0.15;
+            font-family: serif;
+        }
+
+        .review-text {
+            color: #526b73;
+            font-style: italic;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .review-author {
+            font-weight: bold;
+            color: #1d4e56;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .review-meta {
+            font-size: 0.85em;
+            color: #de6b48;
+            font-weight: normal;
+        }
+
+        /* --- SEZIONE FAQ COLLAPSIBLE (A soffietto interattivo) --- */
         .faq-section {
             margin-top: 80px;
             background: #ffffff;
             padding: 50px 40px;
             border-radius: 35px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+            box-shadow: 0 15px 35px rgba(29, 78, 86, 0.03);
+            border: 1px solid #cbdad5;
         }
 
-        .faq-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 30px;
+        .faq-container {
+            margin-top: 35px;
         }
 
-        .faq-item h4 {
+        details {
+            background: #faf7f2;
+            border: 1px solid #cbdad5;
+            border-radius: 18px;
+            margin-bottom: 15px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        details[open] {
+            border-color: #de6b48;
+            background: #ffffff;
+            box-shadow: 0 10px 25px rgba(222, 107, 72, 0.06);
+        }
+
+        summary {
+            font-weight: bold;
             color: #1d4e56;
-            font-size: 1.15em;
-            margin-bottom: 10px;
-            margin-top: 0;
+            font-size: 1.1em;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .faq-item p {
+        summary::-webkit-details-marker {
+            display: none;
+        }
+
+        summary::after {
+            content: '+';
+            color: #de6b48;
+            font-size: 1.5em;
+            transition: transform 0.3s ease;
+            font-weight: normal;
+        }
+
+        details[open] summary::after {
+            content: '−';
+            transform: rotate(180deg);
+        }
+
+        details p {
+            margin-top: 15px;
+            margin-bottom: 0;
             color: #526b73;
             font-size: 0.95em;
-            margin: 0;
+            line-height: 1.6;
         }
 
-        /* FORM CONTATTI */
+        /* --- FORM CONTATTI --- */
         .form-container { 
             background: #ffffff; 
             padding: 50px 40px; 
@@ -281,7 +412,7 @@
             margin-top: 10px;
         }
         
-        /* FOOTER & SOCIAL DESIGN */
+        /* --- FOOTER & SOCIAL --- */
         footer { 
             text-align: center; 
             padding: 70px 20px 40px 20px; 
@@ -327,13 +458,23 @@
 </head>
 <body>
 
-    <!-- Sfondi sfumati dinamici ai lati -->
+    <!-- Icone Vettoriali Fluttuanti ai Lati (Solo Desktop) -->
+    <svg class="decor-side decor-left" viewBox="0 0 24 24" fill="none" stroke="#1d4e56" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/>
+        <circle cx="12" cy="13" r="4"/>
+    </svg>
+    <svg class="decor-side decor-right" viewBox="0 0 24 24" fill="none" stroke="#de6b48" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/>
+        <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
+    </svg>
+
+    <!-- Sfondi Sfumati -->
     <div class="bg-blob blob-left"></div>
     <div class="bg-blob blob-right"></div>
 
     <header>
-        <!-- IL TUO NUOVO LOGO VETTORIALE -->
-        <div class="logo-container" onclick="document.getElementById('contatti').scrollIntoView();">
+        <!-- LOGO INTERATTIVO CON SMOOTH SCROLL AUTOMATICO -->
+        <div class="logo-container" onclick="document.getElementById('contatti').scrollIntoView({ behavior: 'smooth' });">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
                 <circle cx="50" cy="50" r="46" fill="#faf7f2" opacity="0.2" />
                 <circle cx="45" cy="53" r="24" fill="#de6b48" />
@@ -348,7 +489,8 @@
 
         <h1>Immagina solo la parte più bella del viaggio.<br>Al resto ci penso io.</h1>
         <p class="subtitle">Dimentica lo stress da prenotazione e le ore perse a confrontare voli. Disegno l'itinerario perfetto per te, su misura e a tariffa fissa.</p>
-        <a href="#contatti" class="cta-btn">Inizia Ora a 50€</a>
+        <!-- AGGIORNATO CON L'ATTIVAZIONE DELLO SCROLL SOFT -->
+        <button onclick="document.getElementById('contatti').scrollIntoView({ behavior: 'smooth' });" class="cta-btn">Inizia Ora a 50€</button>
     </header>
 
     <div class="section">
@@ -360,48 +502,81 @@
             </div>
 
             <div class="features">
-                <div class="feature-card">
-                    <strong>1. Ci prendiamo un caffè virtuale</strong>
-                    Mi racconti la tua idea: le date preferite, il budget complessivo, lo stile di viaggio (avventura, relax, lusso, low-cost) e cosa sogni di vedere.
-                </div>
-                <div class="feature-card">
-                    <strong>2. Faccio io tutto il lavoro duro</strong>
-                    Analizzo manualmente decine di combinazioni di voli, treni, quartieri sicuri e hotel con recensioni verificate per creare la soluzione perfetta per te.
-                </div>
-                <div class="feature-card">
-                    <strong>3. Ricevi la tua guida e prenoti in 2 clic</strong>
-                    Ti consegno un PDF interattivo con l'itinerario giorno per giorno e i link diretti per bloccare i trasporti e gli hotel in totale autonomia e sicurezza.
+                <div class="features-inside">
+                    <div class="feature-card">
+                        <strong>1. Ci prendiamo un caffè virtuale</strong>
+                        Mi racconti la tua idea: le date preferite, il budget complessivo, lo stile di viaggio (avventura, relax, low-cost) e cosa sogni di vedere.
+                    </div>
+                    <div style="height: 20px;"></div>
+                    <div class="feature-card">
+                        <strong>2. Faccio io tutto il lavoro duro</strong>
+                        Analizzo manualmente decine di combinazioni di voli, treni, quartieri sicuri e hotel con recensioni verificate per creare la soluzione perfetta per te.
+                    </div>
+                    <div style="height: 20px;"></div>
+                    <div class="feature-card">
+                        <strong>3. Ricevi la tua guida e prenoti in 2 clic</strong>
+                        Ti consegno un PDF interattivo con l'itinerario giorno per giorno e i link diretti per bloccare i trasporti e gli hotel in totale autonomia e sicurezza.
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- SEZIONE FAQ (Fiducia e chiarezza immediata) -->
+        <!-- SEZIONE FIDUCIA & TRASPARENZA (Fattore psicologico chiave) -->
+        <div class="trust-banner">
+            <h3>🤝 La mia Garanzia: 100% Trasparenza</h3>
+            <p>A differenza delle agenzie di viaggio tradizionali, **io non ricevo alcuna commissione** dalle strutture o dalle compagnie aeree che ti consiglio. Il mio unico guadagno è la tua quota di 50€. Questo ti garantisce che le mie ricerche saranno sempre totalmente imparziali e finalizzate a farti ottenere il massimo risparmio e la migliore qualità sul mercato!</p>
+        </div>
+
+        <!-- SEZIONE SOCIAL PROOF (Recensioni clienti) -->
+        <h2 style="margin-top: 80px;">Cosa dicono i viaggiatori</h2>
+        <div class="reviews-grid">
+            <div class="review-card">
+                <p class="review-text">"Volevamo fare un weekend a Barcellona senza spendere un patrimonio. In meno di 24 ore ci ha trovato un volo fantastico e un boutique hotel in centro che da soli non avremmo mai scovato. Risparmiato tempo e soldi!"</p>
+                <div class="review-author">
+                    Marco & Sofia <span class="review-meta">• Weekend di Coppia</span>
+                </div>
+            </div>
+            <div class="review-card">
+                <p class="review-text">"Organizzare il viaggio di laurea con 6 amici era un incubo per via dei voli e dei budget diversi di ognuno. Ci ha risolto tutto preparando un itinerario perfetto in Portogallo. Consigliatissimo!"</p>
+                <div class="review-author">
+                    Federica <span class="review-meta">• Viaggio di Gruppo</span>
+                </div>
+            </div>
+            <div class="review-card">
+                <p class="review-text">"Non ho tempo di stare ore su internet per incastrare hotel e treni per i miei viaggi di lavoro e relax. Con 50€ ho avuto un PDF stupendo con tutto pronto. Devo solo cliccare e partire."</p>
+                <div class="review-author">
+                    Alessandro <span class="review-meta">• Viaggiatore Seriale</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- SEZIONE FAQ COLLAPSIBLE -->
         <div class="faq-section">
             <h3 style="text-align:center; color:#1d4e56; margin-top:0; font-size:1.8em;">Domande Frequenti</h3>
-            <div class="faq-grid">
-                <div class="faq-item">
-                    <h4>Perché dovrei pagare te e non un'agenzia?</h4>
-                    <p>Le agenzie tradizionali spesso caricano commissioni nascoste sui prezzi di hotel e voli. Con me paghi solo 50€ per la ricerca e la pianificazione: sei tu a prenotare direttamente, ottenendo i prezzi reali più bassi del web.</p>
-                </div>
-                <div class="faq-item">
-                    <h4>Prenoti tu i voli e gli hotel per me?</h4>
-                    <p>No, per motivi legali e di sicurezza sarai tu a effettuare l'acquisto. Io ti invierò i link diretti (Booking, compagnie aeree ufficiali, ecc.) già configurati. Tu clicchi, inserisci i tuoi dati e prenoti in 2 minuti.</p>
-                </div>
-                <div class="faq-item">
-                    <h4>Cosa succede se voglio modificare qualcosa?</h4>
-                    <p>La tua soddisfazione è fondamentale. Una volta ricevuta la prima bozza dell'itinerario, faremo insieme tutte le modifiche necessarie finché non sarà esattamente il viaggio che desideri.</p>
-                </div>
-                <div class="faq-item">
-                    <h4>La tariffa di 50€ è sempre fissa?</h4>
-                    <p>Sì! Sia che tu mi chieda di organizzare solo la tratta dei voli, solo la selezione degli alloggi o l'itinerario completo di viaggio, la mia tariffa per la consulenza rimane sempre di 50€.</p>
-                </div>
+            <div class="faq-container">
+                <details>
+                    <summary>Perché dovrei pagare te e non un'agenzia?</summary>
+                    <p>Le agenzie tradizionali spesso caricano commissioni nascoste sui prezzi di hotel e voli per guadagnare di più. Con me paghi solo 50€ fissi per il mio tempo e la mia ricerca: sei tu a prenotare direttamente, ottenendo i prezzi reali più bassi del web e risparmiando centinaia di euro.</p>
+                </details>
+                <details>
+                    <summary>Prenoti tu i voli e gli hotel per me?</summary>
+                    <p>No, per motivi legali e di sicurezza sarai tu a effettuare l'acquisto. Io ti invierò i link diretti (Booking, Airbnb, compagnie aeree ufficiali, ecc.) già pre-configurati con le date e le opzioni giuste. Tu ci clicchi sopra, inserisci i tuoi dati di pagamento e prenoti in totale sicurezza.</p>
+                </details>
+                <details>
+                    <summary>Cosa succede se voglio modificare l'itinerario?</summary>
+                    <p>La tua soddisfazione è fondamentale. Una volta ricevuta la prima bozza dell'itinerario personalizzato, faremo insieme tutte le modifiche necessarie finché il programma di viaggio non sarà esattamente come lo desideri.</p>
+                </details>
+                <details>
+                    <summary>La tariffa di 50€ è davvero fissa?</summary>
+                    <p>Sì! Sia che tu mi chieda di organizzare solo la tratta dei voli, solo la selezione degli alloggi o l'itinerario completo di viaggio, la mia tariffa per la consulenza rimane sempre di 50€, senza sorprese.</p>
+                </details>
             </div>
         </div>
 
-        <!-- FORM CONTATTI AVANZATO (Punta alla tua nuova email) -->
+        <!-- FORM CONTATTI AVANZATO (Connesso alla tua email) -->
         <div class="form-container" id="contatti">
             <h3>Disegniamo il tuo prossimo viaggio</h3>
-            <p>Raccontami la tua idea compilando i campi qui sotto. Ti risponderò entro 24 ore con una proposta preliminare per iniziare a parlarne!</p>
+            <p>Raccontami la tua idea compilando i campi qui sotto. Ti risponderò via email entro 24 ore con una proposta preliminare per iniziare a parlarne!</p>
             
             <form action="https://formsubmit.co/morenpinitraveldesigner@gmail.com" method="POST">
                 
@@ -436,7 +611,7 @@
 
                 <div class="form-group">
                     <label for="messaggio">I dettagli del tuo viaggio ideale (Date, Budget, Viaggiatori...)</label>
-                    <textarea id="messaggio" name="Dettagli Viaggio" rows="5" placeholder="Es. Siamo una coppia, vorremmo viaggiare a metà settembre per 5 giorni. Budget totale circa 500€ a persona. Amiamo il buon cibo e vorremmo evitare troppi spostamenti stressanti..." required></textarea>
+                    <textarea id="messaggio" name="Dettagli Viaggio" rows="5" placeholder="Es. Siamo una coppia, vorremmo viaggiare a metà settembre per 5 giorni. Budget totale circa 500€ a persona. Amiamo il buon cibo e vorremmo evitare spostamenti stressanti..." required></textarea>
                 </div>
 
                 <button type="submit" class="cta-btn form-submit-btn">Invia la mia richiesta</button>
@@ -447,11 +622,9 @@
     <footer>
         <!-- Sezione Social -->
         <div class="social-links">
-            <!-- Instagram (Sostituisci IL_TUO_PROFILO quando lo crei) -->
             <a href="https://instagram.com/IL_TUO_PROFILO" class="social-icon" target="_blank" aria-label="Instagram">
                 <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
             </a>
-            <!-- Facebook (Sostituisci LA_TUA_PAGINA quando la crei) -->
             <a href="https://facebook.com/LA_TUA_PAGINA" class="social-icon" target="_blank" aria-label="Facebook">
                 <svg viewBox="0 0 24 24"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/></svg>
             </a>
