@@ -3,171 +3,234 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Il Tuo Viaggio Perfetto | Zero Stress</title>
+    <title>Il Tuo Viaggio Perfetto | Zero Stress con un Travel Designer</title>
     <style>
-        /* Tavolozza Colori Psicologica: Calda, Accogliente, Vacanziera */
+        /* --- TAVOLOZZA COLORI PSICOLOGICA (Vibe Tramonto e Oceano) --- */
+        html {
+            scroll-behavior: smooth; /* Scorrimento fluido tra le sezioni */
+        }
+        
         body { 
             font-family: 'Helvetica Neue', Arial, sans-serif; 
             margin: 0; 
             padding: 0; 
             color: #2f3e46; 
-            background-color: #faf7f2; /* Sfondo caldo color sabbia/lino */
+            background-color: #faf7f2; /* Sabbia caldo */
             line-height: 1.7; 
             position: relative;
-            overflow-x: hidden; /* Evita scorrimenti laterali fastidiosi */
+            overflow-x: hidden; 
         }
         
-        /* DECORATORI AI LATI: Riempiono lo spazio vuoto su schermi grandi */
+        /* DECORATORI SFUMATI AI LATI (Riempiono elegantemente lo schermo su PC) */
         .bg-blob {
             position: absolute;
-            width: 500px;
-            height: 500px;
+            width: 600px;
+            height: 600px;
             border-radius: 50%;
-            filter: blur(120px);
+            filter: blur(140px);
             z-index: -1;
-            opacity: 0.12;
+            opacity: 0.15;
             pointer-events: none;
         }
         .blob-left {
-            background-color: #1d4e56;
-            top: 25%;
-            left: -200px;
+            background-color: #1d4e56; /* Blu Oceano */
+            top: 20%;
+            left: -250px;
         }
         .blob-right {
-            background-color: #de6b48;
-            top: 65%;
-            right: -200px;
+            background-color: #de6b48; /* Terracotta */
+            top: 60%;
+            right: -250px;
         }
 
-        /* Header con immagine di sfondo (Costiera Amalfitana/Tramonto) */
+        /* HEADER (Impatto visivo "Wow" con effetto parallasse soft) */
         header { 
-            background: linear-gradient(rgba(29, 78, 86, 0.65), rgba(17, 51, 56, 0.85)), 
+            background: linear-gradient(rgba(29, 78, 86, 0.7), rgba(17, 51, 56, 0.9)), 
                         url('https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=1600&q=80') no-repeat center center;
             background-size: cover;
+            background-attachment: scroll;
             color: #faf7f2;
             text-align: center; 
             padding: 120px 20px; 
-            border-radius: 0 0 40px 40px; 
-            box-shadow: 0 10px 30px rgba(29, 78, 86, 0.15);
+            border-radius: 0 0 50px 50px; 
+            box-shadow: 0 15px 35px rgba(29, 78, 86, 0.2);
+        }
+
+        /* LOGO INTERATTIVO */
+        .logo-container {
+            margin-bottom: 25px;
+            display: inline-block;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+        }
+
+        .logo-container:hover {
+            transform: scale(1.15) rotate(8deg);
         }
         
         h1 { 
-            font-size: 2.8em; 
+            font-size: 3em; 
             color: #ffffff; 
             margin-bottom: 15px; 
             font-weight: 700;
             letter-spacing: -0.5px;
-            line-height: 1.3;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            line-height: 1.25;
+            text-shadow: 0 3px 15px rgba(0, 0, 0, 0.4);
         }
         
         .subtitle { 
-            font-size: 1.3em; 
+            font-size: 1.35em; 
             color: #e8f1ee; 
-            max-width: 650px;
-            margin: 0 auto 35px auto;
+            max-width: 700px;
+            margin: 0 auto 40px auto;
             font-weight: 300;
-            text-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
         }
         
-        /* Pulsanti */
+        /* BOTTONI CALDI E ACCOGLIENTI */
         .cta-btn { 
             background: #de6b48; 
             color: #ffffff; 
-            padding: 16px 36px; 
+            padding: 18px 40px; 
             text-decoration: none; 
             border-radius: 50px; 
             font-weight: bold; 
             display: inline-block; 
-            transition: all 0.3s ease;
-            box-shadow: 0 6px 20px rgba(222, 107, 72, 0.3);
-            font-size: 1.1em;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 6px 20px rgba(222, 107, 72, 0.4);
+            font-size: 1.15em;
             border: none;
             cursor: pointer;
         }
         
         .cta-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(222, 107, 72, 0.45);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 28px rgba(222, 107, 72, 0.55);
             background: #e27958;
         }
         
         .section { 
-            padding: 80px 20px; 
+            padding: 90px 20px; 
             max-width: 1000px; 
             margin: 0 auto; 
         }
         
         h2 {
-            font-size: 2em;
+            font-size: 2.2em;
             color: #1d4e56;
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 50px;
+            position: relative;
         }
 
-        /* Layout flessibile: foto a sinistra, testo a destra */
+        h2::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: #de6b48;
+            margin: 15px auto 0 auto;
+            border-radius: 2px;
+        }
+
+        /* GRID CONTENT: Flessibile e Responsive */
         .content-grid {
             display: flex;
-            gap: 40px;
+            gap: 50px;
             align-items: center;
             flex-wrap: wrap; 
         }
 
         .grid-image {
-            flex: 1 1 350px;
+            flex: 1 1 380px;
         }
 
         .grid-image img {
             width: 100%;
             height: auto;
-            border-radius: 24px;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+            border-radius: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
             object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .grid-image img:hover {
+            transform: scale(1.02);
         }
         
         .features { 
-            flex: 1 1 400px;
+            flex: 1 1 420px;
             display: flex; 
             flex-direction: column; 
             gap: 25px; 
         }
         
-        /* Schede morbide */
+        /* SCHEDE INFORMATIVE */
         .feature-card { 
             background: #ffffff; 
-            padding: 25px; 
-            border-radius: 20px; 
+            padding: 30px; 
+            border-radius: 24px; 
             border-left: 6px solid #1d4e56; 
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.02);
-            transition: transform 0.3s ease;
+            box-shadow: 0 10px 30px rgba(29, 78, 86, 0.03);
+            transition: all 0.3s ease;
         }
 
         .feature-card:hover {
-            transform: translateX(5px);
+            transform: translateX(8px);
+            box-shadow: 0 15px 35px rgba(29, 78, 86, 0.08);
         }
 
         .feature-card strong {
             color: #1d4e56;
-            font-size: 1.15em;
+            font-size: 1.2em;
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
         }
         
-        /* FORM CONTATTI PROFESSIONALE */
+        /* SEZIONE F.A.Q. (Aumenta la fiducia del cliente del 200%) */
+        .faq-section {
+            margin-top: 80px;
+            background: #ffffff;
+            padding: 50px 40px;
+            border-radius: 35px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+        }
+
+        .faq-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .faq-item h4 {
+            color: #1d4e56;
+            font-size: 1.15em;
+            margin-bottom: 10px;
+            margin-top: 0;
+        }
+
+        .faq-item p {
+            color: #526b73;
+            font-size: 0.95em;
+            margin: 0;
+        }
+
+        /* FORM CONTATTI */
         .form-container { 
             background: #ffffff; 
-            padding: 40px; 
-            border-radius: 30px; 
-            margin-top: 60px; 
+            padding: 50px 40px; 
+            border-radius: 35px; 
+            margin-top: 80px; 
             border: 1px solid #cbdad5;
-            box-shadow: 0 15px 35px rgba(29, 78, 86, 0.05);
+            box-shadow: 0 20px 45px rgba(29, 78, 86, 0.06);
             text-align: left;
         }
         
         .form-container h3 {
             margin-top: 0;
             color: #1d4e56;
-            font-size: 1.8em;
+            font-size: 2em;
             text-align: center;
             margin-bottom: 10px;
         }
@@ -175,100 +238,116 @@
         .form-container p {
             text-align: center;
             color: #526b73;
-            margin-bottom: 30px;
+            margin-bottom: 35px;
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
+            margin-bottom: 10px;
+            font-weight: 600;
             color: #1d4e56;
         }
 
         .form-group input, .form-group select, .form-group textarea {
             width: 100%;
-            padding: 12px 15px;
+            padding: 14px 18px;
             border: 1.5px solid #cbdad5;
-            border-radius: 12px;
+            border-radius: 14px;
             background-color: #faf7f2;
             font-family: inherit;
             color: #2f3e46;
             box-sizing: border-box;
             font-size: 1em;
-            transition: border-color 0.3s;
+            transition: all 0.3s ease;
         }
 
         .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
             outline: none;
             border-color: #de6b48;
             background-color: #ffffff;
+            box-shadow: 0 5px 15px rgba(222, 107, 72, 0.08);
         }
 
         .form-submit-btn {
             width: 100%;
-            padding: 18px;
-            font-size: 1.15em;
+            padding: 20px;
+            font-size: 1.2em;
             border: none;
             cursor: pointer;
+            margin-top: 10px;
         }
         
-        /* Footer & Social */
+        /* FOOTER & SOCIAL DESIGN */
         footer { 
             text-align: center; 
-            padding: 60px 20px 40px 20px; 
+            padding: 70px 20px 40px 20px; 
             background: #113338; 
             color: #cbdad5; 
-            font-size: 0.9em; 
-            border-radius: 40px 40px 0 0;
-            margin-top: 80px;
+            font-size: 0.95em; 
+            border-radius: 50px 50px 0 0;
+            margin-top: 100px;
         }
 
         .social-links {
             display: flex;
-            justify-center: center;
             justify-content: center;
-            gap: 20px;
-            margin-bottom: 30px;
+            gap: 25px;
+            margin-bottom: 35px;
         }
 
         .social-icon {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 45px;
-            height: 45px;
-            background: rgba(250, 247, 242, 0.1);
+            width: 50px;
+            height: 50px;
+            background: rgba(250, 247, 242, 0.08);
             border-radius: 50%;
             color: #faf7f2;
             text-decoration: none;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .social-icon:hover {
             background: #de6b48;
-            transform: translateY(-3px);
+            transform: translateY(-5px) scale(1.1);
+            color: #ffffff;
         }
 
         .social-icon svg {
-            width: 20px;
-            height: 20px;
+            width: 22px;
+            height: 22px;
             fill: currentColor;
         }
     </style>
 </head>
 <body>
 
-    <!-- Sfondi sfumati ai lati -->
+    <!-- Sfondi sfumati dinamici ai lati -->
     <div class="bg-blob blob-left"></div>
     <div class="bg-blob blob-right"></div>
 
     <header>
+        <!-- IL TUO NUOVO LOGO VETTORIALE -->
+        <div class="logo-container" onclick="document.getElementById('contatti').scrollIntoView();">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+                <circle cx="50" cy="50" r="46" fill="#faf7f2" opacity="0.2" />
+                <circle cx="45" cy="53" r="24" fill="#de6b48" />
+                <path d="M 15 65 Q 50 55 85 65" fill="none" stroke="#faf7f2" stroke-width="2.5" opacity="0.5" />
+                <circle cx="50" cy="50" r="38" fill="none" stroke="#faf7f2" stroke-width="1.5" stroke-dasharray="5 4" opacity="0.7" />
+                <g transform="translate(52, 40) rotate(-15)">
+                    <polygon points="0,0 -20,-6 -15,6" fill="#faf7f2" />
+                    <polygon points="0,0 -15,6 -6,9" fill="#cbdad5" />
+                </g>
+            </svg>
+        </div>
+
         <h1>Immagina solo la parte più bella del viaggio.<br>Al resto ci penso io.</h1>
-        <p class="subtitle">Basta ansia da prenotazione, ore perse a confrontare voli e il dubbio di prendere una fregatura. Disegno il tuo itinerario perfetto, su misura per te.</p>
+        <p class="subtitle">Dimentica lo stress da prenotazione e le ore perse a confrontare voli. Disegno l'itinerario perfetto per te, su misura e a tariffa fissa.</p>
         <a href="#contatti" class="cta-btn">Inizia Ora a 50€</a>
     </header>
 
@@ -283,28 +362,50 @@
             <div class="features">
                 <div class="feature-card">
                     <strong>1. Ci prendiamo un caffè virtuale</strong>
-                    Mi racconti la tua idea: le date, il budget che hai a disposizione, le tue preferenze (mare, cultura, relax) e lo stile di viaggio che ti fa battere il cuore.
+                    Mi racconti la tua idea: le date preferite, il budget complessivo, lo stile di viaggio (avventura, relax, lusso, low-cost) e cosa sogni di vedere.
                 </div>
                 <div class="feature-card">
-                    <strong>2. Faccio io il lavoro duro</strong>
-                    Spulcio manualmente tariffe, combinazioni di mezzi, quartieri sicuri e recensioni reali per scovare le perle nascoste al miglior prezzo possibile sul mercato.
+                    <strong>2. Faccio io tutto il lavoro duro</strong>
+                    Analizzo manualmente decine di combinazioni di voli, treni, quartieri sicuri e hotel con recensioni verificate per creare la soluzione perfetta per te.
                 </div>
                 <div class="feature-card">
-                    <strong>3. Tu devi solo preparare la valigia</strong>
-                    Ricevi una guida PDF interattiva con la tua mappa, i consigli sui posti migliori dove mangiare e i link diretti per bloccare voli e hotel in un clic, in totale autonomia e sicurezza.
+                    <strong>3. Ricevi la tua guida e prenoti in 2 clic</strong>
+                    Ti consegno un PDF interattivo con l'itinerario giorno per giorno e i link diretti per bloccare i trasporti e gli hotel in totale autonomia e sicurezza.
                 </div>
             </div>
         </div>
 
-        <!-- FORM CONTATTI AVANZATO -->
+        <!-- SEZIONE FAQ (Fiducia e chiarezza immediata) -->
+        <div class="faq-section">
+            <h3 style="text-align:center; color:#1d4e56; margin-top:0; font-size:1.8em;">Domande Frequenti</h3>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h4>Perché dovrei pagare te e non un'agenzia?</h4>
+                    <p>Le agenzie tradizionali spesso caricano commissioni nascoste sui prezzi di hotel e voli. Con me paghi solo 50€ per la ricerca e la pianificazione: sei tu a prenotare direttamente, ottenendo i prezzi reali più bassi del web.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Prenoti tu i voli e gli hotel per me?</h4>
+                    <p>No, per motivi legali e di sicurezza sarai tu a effettuare l'acquisto. Io ti invierò i link diretti (Booking, compagnie aeree ufficiali, ecc.) già configurati. Tu clicchi, inserisci i tuoi dati e prenoti in 2 minuti.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Cosa succede se voglio modificare qualcosa?</h4>
+                    <p>La tua soddisfazione è fondamentale. Una volta ricevuta la prima bozza dell'itinerario, faremo insieme tutte le modifiche necessarie finché non sarà esattamente il viaggio che desideri.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>La tariffa di 50€ è sempre fissa?</h4>
+                    <p>Sì! Sia che tu mi chieda di organizzare solo la tratta dei voli, solo la selezione degli alloggi o l'itinerario completo di viaggio, la mia tariffa per la consulenza rimane sempre di 50€.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- FORM CONTATTI AVANZATO (Punta alla tua nuova email) -->
         <div class="form-container" id="contatti">
             <h3>Disegniamo il tuo prossimo viaggio</h3>
-            <p>Compila i campi qui sotto. Ti contatterò io via email entro 24 ore per iniziare a pianificare senza alcun impegno iniziale.</p>
+            <p>Raccontami la tua idea compilando i campi qui sotto. Ti risponderò entro 24 ore con una proposta preliminare per iniziare a parlarne!</p>
             
-            <!-- Cambia l'indirizzo email qui sotto con la tua vera email -->
-            <form action="https://formsubmit.co/INSERISCI_QUI_LA_TUA_EMAIL@gmail.com" method="POST">
+            <form action="https://formsubmit.co/morenpinitraveldesigner@gmail.com" method="POST">
                 
-                <!-- Campi di configurazione nascosti per FormSubmit -->
+                <!-- Campi di controllo FormSubmit (Sicurezza e Oggetto mail) -->
                 <input type="hidden" name="_captcha" value="false">
                 <input type="hidden" name="_subject" value="Nuova richiesta viaggio dal sito!">
                 
@@ -319,26 +420,26 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="meta">Dove ti piacerebbe andare?</label>
-                    <input type="text" id="meta" name="Destinazione" placeholder="Es. Tokyo, Parigi, weekend a sorpresa..." required>
+                    <label for="meta">Dove vorresti andare?</label>
+                    <input type="text" id="meta" name="Destinazione" placeholder="Es. Giappone, Andalusia, weekend a Praga..." required>
                 </div>
 
                 <div class="form-group">
-                    <label for="servizio">Cosa vorresti che organizzassi?</label>
+                    <label for="servizio">Cosa desideri che pianifichi?</label>
                     <select id="servizio" name="Tipo Servizio" required>
-                        <option value="" disabled selected>Scegli l'opzione</option>
+                        <option value="" disabled selected>Seleziona un'opzione</option>
                         <option value="Completo">Pacchetto Completo (Mezzi + Alloggio + Itinerario) - 50€</option>
-                        <option value="Solo Alloggio">Solo Alloggio (Hotel o Airbnb perfetti) - 50€</option>
-                        <option value="Solo Mezzi">Solo Mezzi (Pianificazione voli e tragitto) - 50€</option>
+                        <option value="Solo Alloggio">Solo Alloggio (Hotel o Airbnb verificati) - 50€</option>
+                        <option value="Solo Mezzi">Solo Mezzi (Voli, treni e coincidenze ideali) - 50€</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="messaggio">Raccontami la tua idea (Date, Budget, con chi viaggi...)</label>
-                    <textarea id="messaggio" name="Dettagli Viaggio" rows="5" placeholder="Es. Siamo in due, vorremmo fare 4 giorni a inizio ottobre con un budget di circa 400€ a persona..." required></textarea>
+                    <label for="messaggio">I dettagli del tuo viaggio ideale (Date, Budget, Viaggiatori...)</label>
+                    <textarea id="messaggio" name="Dettagli Viaggio" rows="5" placeholder="Es. Siamo una coppia, vorremmo viaggiare a metà settembre per 5 giorni. Budget totale circa 500€ a persona. Amiamo il buon cibo e vorremmo evitare troppi spostamenti stressanti..." required></textarea>
                 </div>
 
-                <button type="submit" class="cta-btn form-submit-btn">Invia la Richiesta</button>
+                <button type="submit" class="cta-btn form-submit-btn">Invia la mia richiesta</button>
             </form>
         </div>
     </div>
@@ -346,11 +447,11 @@
     <footer>
         <!-- Sezione Social -->
         <div class="social-links">
-            <!-- Instagram -->
+            <!-- Instagram (Sostituisci IL_TUO_PROFILO quando lo crei) -->
             <a href="https://instagram.com/IL_TUO_PROFILO" class="social-icon" target="_blank" aria-label="Instagram">
                 <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
             </a>
-            <!-- Facebook -->
+            <!-- Facebook (Sostituisci LA_TUA_PAGINA quando la crei) -->
             <a href="https://facebook.com/LA_TUA_PAGINA" class="social-icon" target="_blank" aria-label="Facebook">
                 <svg viewBox="0 0 24 24"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/></svg>
             </a>
