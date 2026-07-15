@@ -5,87 +5,63 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Il Tuo Viaggio Perfetto | Zero Stress con un Travel Designer</title>
     <style>
-        /* --- CONFIGURAZIONE BASE --- */
+        /* --- CONFIGURAZIONE BASE & SFONDO CON PATTERN VETTORIALE --- */
+        html {
+            scroll-behavior: smooth;
+        }
+        
         body { 
             font-family: 'Helvetica Neue', Arial, sans-serif; 
             margin: 0; 
             padding: 0; 
             color: #2f3e46; 
-            background-color: #faf7f2; /* Sabbia caldo e confortevole */
+            /* Sfondo Grigio-Azzurro fresco + Pattern di icone viaggio ultra-leggero e ripetuto */
+            background-color: #f4f7f6; 
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 120 120'%3E%3Cg fill='%231d4e56' fill-opacity='0.03'%3E%3Cpath d='M15 15c-1.1 0-2 .9-2 2v6c0 1.1.9 2 2 2h2v1h2v-1h4v1h2v-1h2c1.1 0 2-.9 2-2v-6c0-1.1-.9-2-2-2h-2v-1.5c0-.8-.7-1.5-1.5-1.5h-3c-.8 0-1.5.7-1.5 1.5v1.5h-2zm4-1.5h3v1.5h-3zm-4 3.5h14v6H15zm65-2c-3.3 0-6 2.7-6 6s2.7 6 6 6 6-2.7 6-6-2.7-6-6-6zm0 10c-2.2 0-4-1.8-4-4s1.8-4 4-4 4 1.8 4 4-1.8 4-4 4zm1-6h-2v2h-2v1h2v2h2v-2h2v-1h-2zm-60 65c-2.8 0-5 2.2-5 5s2.2 5 5 5 5-2.2 5-5-2.2-5-5-5zm0 8c-1.7 0-3-1.3-3-3s1.3-3 3-3 3 1.3 3 3-1.3 3-3 3zm1-5h-2v2h-2v1h2v2h2v-2h2v-1h-2zm65-13l8-7 3 2 9-8 8 7v8l-8-7-9 8-3-2-8 7z'/%3E%3C/g%3E%3C/svg%3E");
             line-height: 1.7; 
             position: relative;
             overflow-x: hidden; 
         }
 
-        /* --- DECORAZIONI LATERALI (STAMPS FLUTTUANTI) --- */
-        .side-badge {
+        /* --- ICONE DECORATIVE FISSE AI LATI (Eleganti e non invadenti) --- */
+        .decor-icon-fixed {
             position: fixed;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 120px;
-            background: #ffffff;
-            padding: 20px 15px;
-            border-radius: 24px;
-            box-shadow: 0 15px 35px rgba(29, 78, 86, 0.08);
-            border: 1px solid #cbdad5;
-            text-align: center;
-            z-index: 10;
-            display: none; /* Nascosti su mobile */
-            transition: all 0.3s ease;
-        }
-
-        .side-badge:hover {
-            transform: translateY(-55%) scale(1.05);
-            box-shadow: 0 20px 40px rgba(222, 107, 72, 0.15);
-            border-color: #de6b48;
-        }
-
-        .side-badge-left {
-            left: 30px;
-            animation: floatLeft 6s ease-in-out infinite;
-        }
-
-        .side-badge-right {
-            right: 30px;
-            animation: floatRight 7s ease-in-out infinite;
-        }
-
-        .side-badge svg {
-            width: 40px;
-            height: 40px;
-            margin-bottom: 10px;
-        }
-
-        .side-badge h4 {
-            margin: 0;
-            font-size: 0.85em;
+            width: 60px;
+            height: 60px;
+            opacity: 0.15;
             color: #1d4e56;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            pointer-events: none; /* Non bloccano i clic dell'utente */
+            display: none; /* Nascoste su schermi piccoli */
+            z-index: 5;
         }
 
-        .side-badge p {
-            margin: 5px 0 0 0;
-            font-size: 0.8em;
-            color: #de6b48;
-            font-weight: bold;
+        @media (min-width: 1024px) {
+            .decor-icon-fixed {
+                display: block;
+            }
+            /* Lato Sinistro (Tonalità Oceano) */
+            .fixed-camera { left: 4%; top: 25%; animation: floatSlow 8s ease-in-out infinite; }
+            .fixed-plane { left: 5%; top: 50%; animation: floatMedium 7s ease-in-out infinite; }
+            .fixed-map { left: 3%; top: 75%; animation: floatSlow 9s ease-in-out infinite; }
+            
+            /* Lato Destro (Tonalità Terracotta) */
+            .fixed-compass { right: 4%; top: 30%; animation: floatMedium 9s ease-in-out infinite; color: #de6b48; }
+            .fixed-oasis { right: 5%; top: 55%; animation: floatSlow 10s ease-in-out infinite; color: #de6b48; }
+            .fixed-suitcase { right: 3%; top: 80%; animation: floatMedium 8s ease-in-out infinite; color: #de6b48; }
         }
 
-        @media (min-width: 1200px) {
-            .side-badge { display: block; }
+        /* Animazioni di galleggiamento differenziate per un effetto naturale */
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(4deg); }
         }
 
-        @keyframes floatLeft {
-            0%, 100% { transform: translateY(-50%) rotate(0deg); }
-            50% { transform: translateY(-58%) rotate(3deg); }
+        @keyframes floatMedium {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-22px) rotate(-5deg); }
         }
 
-        @keyframes floatRight {
-            0%, 100% { transform: translateY(-50%) rotate(0deg); }
-            50% { transform: translateY(-42%) rotate(-3deg); }
-        }
-
-        /* Sfondi sfumati giganti */
+        /* Sfondi sfumati giganti di atmosfera */
         .bg-blob {
             position: absolute;
             width: 700px;
@@ -93,7 +69,7 @@
             border-radius: 50%;
             filter: blur(160px);
             z-index: -1;
-            opacity: 0.15;
+            opacity: 0.12;
             pointer-events: none;
         }
         .blob-left { background-color: #1d4e56; top: 15%; left: -250px; }
@@ -101,7 +77,7 @@
 
         /* --- HEADER --- */
         header { 
-            background: linear-gradient(rgba(29, 78, 86, 0.7), rgba(17, 51, 56, 0.9)), 
+            background: linear-gradient(rgba(29, 78, 86, 0.75), rgba(17, 51, 56, 0.95)), 
                         url('https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=1600&q=80') no-repeat center center;
             background-size: cover;
             color: #faf7f2;
@@ -109,6 +85,8 @@
             padding: 130px 20px; 
             border-radius: 0 0 50px 50px; 
             box-shadow: 0 15px 35px rgba(29, 78, 86, 0.2);
+            position: relative;
+            z-index: 2;
         }
 
         .logo-container {
@@ -116,10 +94,27 @@
             display: inline-block;
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             cursor: pointer;
+            position: relative;
         }
 
         .logo-container:hover {
             transform: scale(1.15) rotate(8deg);
+        }
+
+        .logo-hint {
+            display: block;
+            font-size: 0.75em;
+            color: #e8f1ee;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 5px;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+
+        .logo-container:hover .logo-hint {
+            opacity: 1;
+            color: #de6b48;
         }
         
         h1 { 
@@ -167,6 +162,8 @@
             padding: 90px 20px; 
             max-width: 1000px; 
             margin: 0 auto; 
+            position: relative;
+            z-index: 2;
         }
         
         h2 {
@@ -259,7 +256,7 @@
             line-height: 1.6;
         }
 
-        /* --- SEZIONE RECENSIONI (SOCIAL PROOF) --- */
+        /* --- SEZIONE RECENSIONI --- */
         .reviews-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -413,7 +410,7 @@
             padding: 14px 18px;
             border: 1.5px solid #cbdad5;
             border-radius: 14px;
-            background-color: #faf7f2;
+            background-color: #f4f7f6;
             font-family: inherit;
             color: #2f3e46;
             box-sizing: border-box;
@@ -521,6 +518,8 @@
             font-size: 0.95em; 
             border-radius: 50px 50px 0 0;
             margin-top: 100px;
+            position: relative;
+            z-index: 2;
         }
 
         .social-links {
@@ -558,32 +557,37 @@
 </head>
 <body>
 
-    <!-- STAMPS DECORATIVI LATERALI (Sempre visibili su Desktop) -->
-    <div class="side-badge side-badge-left">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#de6b48" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-            <polyline points="22 4 12 14.01 9 11.01"/>
-        </svg>
-        <h4>Su Misura</h4>
-        <p>100% Personalizzato</p>
-    </div>
-
-    <div class="side-badge side-badge-right">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#1d4e56" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10"/>
-            <line x1="12" y1="8" x2="12" y2="16"/>
-            <line x1="8" y1="12" x2="12" y2="12"/>
-        </svg>
-        <h4>Prezzo Onesto</h4>
-        <p>Solo 40€ Fissi</p>
-    </div>
+    <!-- ICONE DECORATIVE FISSE AI LATI (Solo Desktop) -->
+    <svg class="decor-icon-fixed fixed-camera" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/>
+        <circle cx="12" cy="13" r="4"/>
+    </svg>
+    <svg class="decor-icon-fixed fixed-plane" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M17.8 19.2L16 11l3.5-3.5a1 1 0 0 0 0-1.4 1 1 0 0 0-1.4 0L14.6 9.6l-8-1.8a1 1 0 0 0-1.2.6L4.2 10a1 1 0 0 0 .3 1.2l6.2 3.3-3.3 3.3-2.2-.4a1 1 0 0 0-.9.2L3.2 19a1 1 0 0 0 .4 1.6l3.5.7.7 3.5a1 1 0 0 0 1.6.4l1.2-1.2a1 1 0 0 0 .2-.9l-.4-2.2 3.3-3.3 3.3 6.2a1 1 0 0 0 1.2.3l1.6-1.2a1 1 0 0 0 .5-1.2z"/>
+    </svg>
+    <svg class="decor-icon-fixed fixed-map" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/>
+        <line x1="9" y1="3" x2="9" y2="18"/>
+        <line x1="15" y1="6" x2="15" y2="21"/>
+    </svg>
+    <svg class="decor-icon-fixed fixed-compass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/>
+        <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
+    </svg>
+    <svg class="decor-icon-fixed fixed-oasis" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 22V10M12 10C8 10 5 7 5 5M12 10C16 10 19 7 19 5M12 10C12 6 9 3 9 3M12 10C12 6 15 3 15 3"/>
+    </svg>
+    <svg class="decor-icon-fixed fixed-suitcase" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="6" width="18" height="14" rx="2"/>
+        <path d="M16 6V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
+    </svg>
 
     <!-- Sfondi Sfumati -->
     <div class="bg-blob blob-left"></div>
     <div class="bg-blob blob-right"></div>
 
     <header>
-        <!-- LOGO INTERATTIVO (Apre la finestra chi sono) -->
+        <!-- LOGO INTERATTIVO (Apre popup) -->
         <div class="logo-container" onclick="openAboutModal();">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
                 <circle cx="50" cy="50" r="46" fill="#faf7f2" opacity="0.2" />
@@ -595,6 +599,7 @@
                     <polygon points="0,0 -15,6 -6,9" fill="#cbdad5" />
                 </g>
             </svg>
+            <span class="logo-hint">Chi Sono?</span>
         </div>
 
         <h1>Immagina solo la parte più bella del viaggio.<br>Al resto ci penso io.</h1>
@@ -682,7 +687,7 @@
             </div>
         </div>
 
-        <!-- FORM CONTATTI AVANZATO -->
+        <!-- FORM CONTATTI AVANZATO (Punta alla tua nuova email) -->
         <div class="form-container" id="contatti">
             <h3>Disegniamo il tuo prossimo viaggio</h3>
             <p>Raccontami la tua idea compilando i campi qui sotto. Ti risponderò via email entro 24 ore con una proposta preliminare per iniziare a parlarne!</p>
@@ -729,12 +734,13 @@
 
     <!-- LA FINESTRA POPUP (Chi Sono) -->
     <div id="aboutModal" class="modal-overlay" onclick="closeAboutModal(event);">
-        <div class="modal-content">
+        <div class="modal-content" onclick="event.stopPropagation();">
             <span class="close-btn" onclick="closeAboutModal(null);">&times;</span>
             <h3>Dietro alla mappa: Chi sono</h3>
-            <p>Ciao! Sono <strong>Moreno</strong>, ho 27 anni e ho una confessione da fare: per me, la parte più entusiasmante di un viaggio inizia mesi prima di salire sull'aereo.</p>
-            <p>Mentre la maggior parte delle persone prova un senso d'ansia pazzesco all'idea di incastrare coincidenze, leggere decine di recensioni di hotel o calcolare i budget, io provo pura adrenalina. È un'<strong>abilità innata</strong> che ho scoperto di avere fin da ragazzino, quando programmavo nei minimi dettagli le avventure per i miei amici, ottimizzando ogni singolo centesimo senza mai rinunciare alla meraviglia della scoperta.</p>
-            <p>Ciò che per molti è uno stress, per me è <strong>puro piacere</strong>. Ho creato questo spazio per mettere questo mio talento naturale al tuo servizio. Io trovo le gemme nascoste e le combinazioni perfette al minor prezzo; tu devi solo fare la valigia e goderti la parte più bella: partire.</p>
+            <p>Ciao! Sono <strong>Enrico</strong>, ho 27 anni e ho un "superpotere" un po' strano: amo l'ottimizzazione millimetrica.</p>
+            <p>Mentre la maggior parte delle persone prova un senso di ansia soffocante all'idea di allineare coincidenze di treni e aerei, di decifrare recensioni e incastrare budget, io provo pura scarica di adrenalina. È una <strong>struttura mentale innata</strong>, una sorta di "algoritmo naturale" che ho sempre applicato inconsciamente nella mia vita e che ho scoperto di avere fin da ragazzino, quando programmavo nei minimi dettagli le vacanze per i miei amici.</p>
+            <p>Per me la pianificazione è un'opera di precisione: scovare la tratta perfetta e l'alloggio più caratteristico al prezzo più basso non è un dovere noioso, ma un <strong>piacere intellettuale</strong>. Ho deciso di unire questa mia passione per i dettagli al desiderio di aiutare chi vuole viaggiare ma non ha tempo o voglia di perdersi tra decine di schede aperte sul browser.</p>
+            <p>Mentre io mi occupo di fare "l'ingegnere" del tuo viaggio per farti risparmiare tempo e denaro, tu devi solo occuparti della parte più bella: <strong>preparare i bagagli e partire.</strong></p>
         </div>
     </div>
 
@@ -750,9 +756,9 @@
         <p>&copy; 2026 Travel Designer Indipendente. Servizio di consulenza per viaggiatori liberi.</p>
     </footer>
 
-    <!-- --- JAVASCRIPT AVANZATO PER AZIONI FLUIDE --- -->
+    <!-- --- JAVASCRIPT --- -->
     <script>
-        // 1. FUNZIONE DI SMOOTH SCROLLING "A EFFETTO SETA"
+        // 1. SCROLLING FLUIDO SETOSO (Easing Ease-In-Out)
         function smoothScrollTo(elementId) {
             const target = document.getElementById(elementId);
             if (!target) return;
@@ -760,7 +766,7 @@
             const targetPosition = target.getBoundingClientRect().top + window.pageYOffset;
             const startPosition = window.pageYOffset;
             const distance = targetPosition - startPosition;
-            const duration = 1200; // Durata in millisecondi (rallentata ed elegante)
+            const duration = 1200; // Tempo dell'effetto in millisecondi
             let start = null;
 
             window.requestAnimationFrame(step);
@@ -768,9 +774,9 @@
             function step(timestamp) {
                 if (!start) start = timestamp;
                 const progress = timestamp - start;
-                
-                // Funzione di attenuazione matematica Ease-In-Out (accelerazione e decelerazione dolce)
                 const progressPercentage = Math.min(progress / duration, 1);
+                
+                // Funzione di easing morbida
                 const easeInOutQuad = progressPercentage < 0.5 
                     ? 2 * progressPercentage * progressPercentage 
                     : -1 + (4 - 2 * progressPercentage) * progressPercentage;
@@ -780,12 +786,12 @@
                 if (progress < duration) {
                     window.requestAnimationFrame(step);
                 } else {
-                    window.scrollTo(0, targetPosition); // Si assicura di arrivare a destinazione esatta
+                    window.scrollTo(0, targetPosition);
                 }
             }
         }
 
-        // 2. FUNZIONI DI GESTIONE DEL MODAL (ABOUT)
+        // 2. CONTROLLO POPUP "CHI SONO"
         function openAboutModal() {
             const modal = document.getElementById('aboutModal');
             modal.style.display = 'flex';
@@ -795,9 +801,15 @@
         }
 
         function closeAboutModal(event) {
-            // Se clicchi fuori dal box o sul tasto chiudi, si chiude con effetto morbido
             const modal = document.getElementById('aboutModal');
-            if (event === null || event.target === modal) {
+            if (event === null || event === undefined) {
+                modal.classList.remove('show');
+                setTimeout(() => {
+                    modal.style.display = 'none';
+                }, 300);
+                return;
+            }
+            if (event.target === modal || event.target.classList.contains('close-btn')) {
                 modal.classList.remove('show');
                 setTimeout(() => {
                     modal.style.display = 'none';
